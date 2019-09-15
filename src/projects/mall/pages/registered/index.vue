@@ -74,13 +74,10 @@ export default {
   methods: {
     async registered () {
       try {
-
-        let ret = await this.$koa2Api.registered({
+        let ret = await this.$mallApi.registered({
           phone: this.phone,
           password: this.password
         })
-        console.log(ret)
-
         if (+ret.data._errCode === 0) {
           const _this = this
           Toast.success({
@@ -93,7 +90,6 @@ export default {
         } else {
           Toast.fail(ret.data._errStr)
         }
-
       } catch (err) {
         console.log(err)
       }

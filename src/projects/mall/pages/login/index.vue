@@ -75,13 +75,10 @@ export default {
   methods: {
     async loginSubmit () {
       try {
-
-        let ret = await this.$koa2Api.login({
+        let ret = await this.$mallApi.login({
           phone: this.phone,
           password: this.password
         })
-        console.log(ret)
-
         if (+ret.data._errCode === 0) {
           Toast.success('登录成功!')
           Cookies.set('token', ret.data._data.token)
@@ -96,7 +93,6 @@ export default {
         } else {
           Toast.fail(ret.data._errStr)
         }
-
       } catch (err) {
         console.log(err)
       }

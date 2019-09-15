@@ -80,14 +80,11 @@ export default {
   methods: {
     async changePwd () {
       try {
-
-        let ret = await this.$koa2Api.changePwd({
+        let ret = await this.$mallApi.changePwd({
           phone: this.phone,
           old_password: this.old_password,
           new_password: this.new_password
         })
-        console.log(ret)
-
         if (+ret.data._errCode === 0) {
           const _this = this
           Toast.success({
@@ -100,7 +97,6 @@ export default {
         } else {
           Toast.fail(ret.data._errStr)
         }
-
       } catch (err) {
         console.log(err)
       }
