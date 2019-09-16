@@ -60,11 +60,11 @@ export default {
       data: data
     })
   },
-  getShopList (data) {
+  getShopList () {
     return request({
       url: '/api/getShopList',
       method: 'post',
-      data: data
+      data: {}
     })
   },
   getAllAddress () {

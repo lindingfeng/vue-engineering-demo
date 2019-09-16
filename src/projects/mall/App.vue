@@ -40,4 +40,12 @@ html {
 #app {
   /* background-color: #f3f3f3; */
 }
+.clearFix:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.clearFix {
+  zoom: 1;
+}
 </style>
