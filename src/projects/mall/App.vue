@@ -10,7 +10,7 @@
 export default {
   name: 'App',
   mounted () {
-    this.$store.dispatch('checkLoginState')
+    // this.$store.dispatch('checkLoginState')
   }
 }
 </script>

@@ -89,7 +89,7 @@ export default {
     async getShopList () {
       let ret = await this.$mallApi.getShopList()
       if (+ret.data._errCode === 0) {
-        this.shopList = ret.data._data.shopList
+        this.shopList = ret.data._data.shop_list
       }
     },
     touchstartHandle (e) {
@@ -113,6 +113,8 @@ export default {
   },
   mounted () {
     this.getShopList()
+    const arr = ['afg', 'adc', 'hyf', 'lkj'].sort()
+    console.log(arr)
   }
 }
 </script>
@@ -127,6 +129,7 @@ export default {
   width: 100%;
   /* height: 160px; */
   background-color: #fff;
+  
 }
 .category-item {
   height: 145px;

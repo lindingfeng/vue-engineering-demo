@@ -60,13 +60,13 @@ export default {
       data: data
     })
   },
-  getShopList () {
-    return request({
-      url: '/api/getShopList',
-      method: 'post',
-      data: {}
-    })
-  },
+  // getShopList () {
+  //   return request({
+  //     url: '/api/getShopList',
+  //     method: 'post',
+  //     data: {}
+  //   })
+  // },
   getAllAddress () {
     return request({
       url: '/json/area.json',
@@ -91,6 +91,20 @@ export default {
   getAddressInfo (data) {
     return request({
       url: '/api/getAddressInfo',
+      method: 'post',
+      data: data
+    })
+  },
+  getShopList () {
+    return request({
+      url: '/admin/mall/getShopList',
+      method: 'post',
+      data: {}
+    })
+  },
+  loginByEgg (data) {
+    return request({
+      url: '/admin/mall/login',
       method: 'post',
       data: data
     })

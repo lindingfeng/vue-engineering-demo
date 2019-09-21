@@ -75,7 +75,7 @@ export default {
   methods: {
     async loginSubmit () {
       try {
-        let ret = await this.$mallApi.login({
+        let ret = await this.$mallApi.loginByEgg({
           phone: this.phone,
           password: this.password
         })
