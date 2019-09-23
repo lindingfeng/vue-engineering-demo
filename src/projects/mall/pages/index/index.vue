@@ -36,8 +36,7 @@
         </li>
       </ul>
     </div>
-    <!-- test move -->
-    <div class="move-ele" :style="moveStyle" @touchstart="touchstartHandle" @touchmove="touchmoveHandle"></div>
+    <van-uploader multiple :after-read="afterRead" />
   </div>
 </template>
 
@@ -51,6 +50,7 @@ import {
   CollapseItem,
   Cell,
   CellGroup,
+  Uploader
 } from 'vant'
 
 export default {
@@ -62,7 +62,8 @@ export default {
     [Collapse.name]: Collapse,
     [CollapseItem.name]: CollapseItem,
     [CellGroup.name]: CellGroup,
-    [Cell.name]: Cell
+    [Cell.name]: Cell,
+    [Uploader.name]: Uploader,
   },
   data () {
     return {
@@ -71,10 +72,7 @@ export default {
         'https://aecpm.alicdn.com/simba/img/TB14ab1KpXXXXclXFXXSutbFXXX.jpg_q50.jpg',
         'https://aecpm.alicdn.com/simba/img/TB1CWf9KpXXXXbuXpXXSutbFXXX.jpg_q50.jpg'
       ],
-      shopList: [],
-      startPlaceX: 0,
-      startPlaceY: 0,
-      moveStyle: ''
+      shopList: []
     }
   },
   computed: {
@@ -87,49 +85,49 @@ export default {
   },
   methods: {
     async getShopList () {
+      this.$mallApi.checkLoginState()
       let ret = await this.$mallApi.getShopList()
       if (+ret.data._errCode === 0) {
         this.shopList = ret.data._data.shop_list
       }
     },
-    touchstartHandle (e) {
-      const diff = e.targetTouches[0].clientX - e.targetTouches[0].target.offsetLeft
-      this.startPlaceX = e.targetTouches[0].clientX
-      this.startPlaceY = e.targetTouches[0].clientY
+    async uploadfile (formdata) {
+      try {
+        let ret = await this.$mallApi.uploadfile(formdata)
+        if (+ret.data._errCode === 0) {
+          console.log(ret.data)
+        } else {
+          console.log(ret.data._errStr)
+        }
+      } catch (err) {
+        console.log(err)
+      }
     },
-    touchmoveHandle (e) {
-      const clientX = e.targetTouches[0].clientX
-      const clientY = e.targetTouches[0].clientY
-      const offsetLeft = e.targetTouches[0].target.offsetLeft
-      const offsetTop = e.targetTouches[0].target.offsetTop
-      const diffX = clientX - this.startPlaceX
-      const diffY = clientY - this.startPlaceY
-      this.moveStyle = `left: ${offsetLeft + diffX}px;top: ${offsetTop + diffY}px;`
-      this.startPlaceX = clientX
-      this.startPlaceY = clientY
-      e.cancelBubble = true
-      e.preventDefault()
+    afterRead(file) {
+      let formdata = new FormData()
+      console.log(file)
+      if (Array.isArray(file)) {
+        file.forEach(ele => {
+          formdata.append('lindf', ele.file)
+        })
+      } else {
+        formdata.append('lindf', file.file)
+      }
+      this.uploadfile(formdata)
     }
   },
   mounted () {
     this.getShopList()
-    const arr = ['afg', 'adc', 'hyf', 'lkj'].sort()
-    console.log(arr)
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-.index-page {
-  height: 100vh;
-  overflow: hidden;
-  box-sizing: border-box;
-}
+.index-page {}
 .category-content {
   width: 100%;
   /* height: 160px; */
   background-color: #fff;
-  
 }
 .category-item {
   height: 145px;

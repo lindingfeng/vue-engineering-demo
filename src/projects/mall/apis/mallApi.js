@@ -1,13 +1,6 @@
 import request from '@@/utils/request'
 
 export default {
-  checkLoginState () {
-    return request({
-      url: '/api/checkLoginState',
-      method: 'post',
-      data: {}
-    })
-  },
   login (data) {
     return request({
       url: '/api/login',
@@ -43,16 +36,6 @@ export default {
       data: {}
     })
   },
-  uploadfile (data) {
-    return request({
-      url: '/api/uploadfile',
-      method: 'post',
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      data: data
-    })
-  },
   addShop (data) {
     return request({
       url: '/api/addShop',
@@ -60,13 +43,6 @@ export default {
       data: data
     })
   },
-  // getShopList () {
-  //   return request({
-  //     url: '/api/getShopList',
-  //     method: 'post',
-  //     data: {}
-  //   })
-  // },
   getAllAddress () {
     return request({
       url: '/json/area.json',
@@ -95,18 +71,20 @@ export default {
       data: data
     })
   },
-  getShopList () {
-    return request({
-      url: '/admin/mall/getShopList',
-      method: 'post',
-      data: {}
-    })
+  checkLoginState () {
+    return request.get('/common/checkLoginState')
   },
-  loginByEgg (data) {
-    return request({
-      url: '/admin/mall/login',
-      method: 'post',
-      data: data
+  getShopList (params = {}) {
+    return request.get('/admin/mall/getShopList', { params: { ...params } })
+  },
+  loginByEgg (params = {}) {
+    return request.post('/admin/mall/login', null, { params: { ...params } })
+  },
+  uploadfile (data) {
+    return request.post('/common/uploader', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     })
   }
 }
