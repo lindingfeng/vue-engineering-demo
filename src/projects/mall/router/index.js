@@ -9,8 +9,28 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'home',
+      redirect: '/index'
+    },
+    {
+      path: '/index',
       name: 'index',
       component: () => import('@@/pages/index')
+    },
+    {
+      path: '/category',
+      name: 'category',
+      component: () => import('@@/pages/category')
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('@@/pages/cart')
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: () => import('@@/pages/account')
     },
     {
       path: '/login',

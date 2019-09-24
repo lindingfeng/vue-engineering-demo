@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import mallApi from './apis/mallApi'
+import 'font-awesome/css/font-awesome.css'
 
 // 解决移动端click延迟300ms
 // import FastClick from 'fastclick'

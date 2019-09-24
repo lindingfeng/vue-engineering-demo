@@ -37,6 +37,7 @@
       </ul>
     </div>
     <van-uploader multiple :after-read="afterRead" />
+    <tab-bar :activeTab="activeTab" @tabBarChange="tabBarChange" />
   </div>
 </template>
 
@@ -52,6 +53,7 @@ import {
   CellGroup,
   Uploader
 } from 'vant'
+import tabBar from '@@/components/tabBar'
 
 export default {
   components: {
@@ -64,6 +66,7 @@ export default {
     [CellGroup.name]: CellGroup,
     [Cell.name]: Cell,
     [Uploader.name]: Uploader,
+    tabBar
   },
   data () {
     return {
@@ -72,7 +75,9 @@ export default {
         'https://aecpm.alicdn.com/simba/img/TB14ab1KpXXXXclXFXXSutbFXXX.jpg_q50.jpg',
         'https://aecpm.alicdn.com/simba/img/TB1CWf9KpXXXXbuXpXXSutbFXXX.jpg_q50.jpg'
       ],
-      shopList: []
+      shopList: [],
+      activeTab: 0,
+      tabBarList: [ 'index', 'category', 'cart', 'account' ]
     }
   },
   computed: {
@@ -105,7 +110,6 @@ export default {
     },
     afterRead(file) {
       let formdata = new FormData()
-      console.log(file)
       if (Array.isArray(file)) {
         file.forEach(ele => {
           formdata.append('lindf', ele.file)
@@ -114,6 +118,12 @@ export default {
         formdata.append('lindf', file.file)
       }
       this.uploadfile(formdata)
+    },
+    tabBarChange (ev) {
+      const index = (ev || {}).index || 0
+      if (index !== this.activeTab) {
+        this.$router.push(this.tabBarList[index])
+      }
     }
   },
   mounted () {
@@ -123,7 +133,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.index-page {}
+.index-page {
+  padding-bottom: 50px;
+}
 .category-content {
   width: 100%;
   /* height: 160px; */

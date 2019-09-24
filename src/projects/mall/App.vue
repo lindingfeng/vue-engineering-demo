@@ -37,6 +37,9 @@ html {
   height: 100%;
   background-color: #f3f3f3;
 }
+body {
+  font-family: -apple-system,Helvetica,sans-serif;
+}
 #app {
   /* background-color: #f3f3f3; */
 }
