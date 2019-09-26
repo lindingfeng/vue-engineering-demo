@@ -27,6 +27,7 @@
     "js-md5": "^0.7.3",
     "mavon-editor": "^2.7.5",
     "mint-ui": "^2.2.13",
+    "mobile-detect": "^1.4.4",
     "mockjs": "^1.0.1-beta3",
     "normalize.css": "7.0.0",
     "nprogress": "^0.2.0",

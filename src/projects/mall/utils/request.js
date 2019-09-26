@@ -6,6 +6,7 @@ import { commonParams } from '../config'
 
 // 创建axios实例
 const service = axios.create({
+  // baseURL: 'http://132.232.35.229:7001',
   baseURL: 'http://127.0.0.1:7001',
   // transformRequest: [function (data) {
   //   let ret = ''

@@ -48,6 +48,23 @@
           <p>足迹</p>
         </div>
       </div>
+      <!-- 选项列表 -->
+      <div class="options-content">
+        <ul>
+          <li
+            v-for="(item, index) in optionList"
+            :key="index"
+            class="options-item"
+            @click="optionClick(item.path)"
+          >
+            <div class="options-left-content">
+              <i class="fa fa-telegram"></i>
+              <p>{{item.title}}</p>
+            </div>
+            <i class="fa fa-angle-right"></i>
+          </li>
+        </ul>
+      </div>
     </div>
     <tab-bar :activeTab="activeTab" @tabBarChange="tabBarChange" />
   </div>
@@ -70,6 +87,13 @@ export default {
         { title: '待收货', icon: 'fa fa-truck' },
         { title: '待评价', icon: 'fa fa-commenting' },
         { title: '退款/售后', icon: 'fa fa-github-alt' },
+      ],
+      optionList: [
+        { title: '消费记录', path: 'myAddress' },
+        { title: '消息中心', path: 'myAddress' },
+        { title: '我的地址', path: 'myAddress' },
+        { title: '联系客服', path: 'myAddress' },
+        { title: '关于我们', path: 'myAddress' }
       ]
     }
   },
@@ -85,10 +109,14 @@ export default {
       if (index !== this.activeTab) {
         this.$router.push(this.tabBarList[index])
       }
+    },
+    optionClick (path) {
+      this.$router.push(path)
     }
   },
   mounted () {
     // this.getShopList()
+    console.log(navigator.userAgent)
   }
 }
 </script>
@@ -221,6 +249,37 @@ export default {
     margin-top: 10px;
     font-size: 12px;
     color: #666;
+  }
+}
+.options-content {
+  background-color: #fff;
+  border-radius: 12px;
+}
+.options-item {
+  height: 44px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 0.5px solid #f0f0f0;
+  &:first-child {
+    border-top: 0;
+  }
+  .options-left-content {
+    display: flex;
+    align-items: center;
+    .fa {
+      margin-right: 5px;
+      font-size: 16px;
+      color: #444;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+  .fa-angle-right {
+    font-size: 22px;
+    color: #c5c5c5;
   }
 }
 </style>

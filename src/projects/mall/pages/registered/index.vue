@@ -154,11 +154,10 @@ export default {
 }
 .login-button {
   width: 100%;
-  /* margin-top: 40px; */
   height: 44px;
   font-size: 16px;
   color: #ffffff;
-  background-color: #FFDA05;
+  background-image: linear-gradient(to right, #eb3c3c, #ff7459);
   border-color: transparent;
   border-radius: 5px;
   &.van-button--disabled {

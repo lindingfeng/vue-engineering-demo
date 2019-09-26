@@ -1,20 +1,6 @@
 import request from '@@/utils/request'
 
 export default {
-  login (data) {
-    return request({
-      url: '/api/login',
-      method: 'post',
-      data: data
-    })
-  },
-  registered (data) {
-    return request({
-      url: '/api/registered',
-      method: 'post',
-      data: data
-    })
-  },
   changePwd (data) {
     return request({
       url: '/api/changePwd',
@@ -43,42 +29,17 @@ export default {
       data: data
     })
   },
-  getAllAddress () {
-    return request({
-      url: '/json/area.json',
-      method: 'get',
-      data: {}
-    })
-  },
-  addAddress (data) {
-    return request({
-      url: '/api/addAddress',
-      method: 'post',
-      data: data
-    })
-  },
-  getAddress () {
-    return request({
-      url: '/api/getAddress',
-      method: 'post',
-      data: {}
-    })
-  },
-  getAddressInfo (data) {
-    return request({
-      url: '/api/getAddressInfo',
-      method: 'post',
-      data: data
-    })
-  },
   checkLoginState () {
     return request.get('/common/checkLoginState')
   },
   getShopList (params = {}) {
     return request.get('/admin/mall/getShopList', { params: { ...params } })
   },
-  loginByEgg (params = {}) {
+  login (params = {}) {
     return request.post('/admin/mall/login', null, { params: { ...params } })
+  },
+  registered (params = {}) {
+    return request.post('/admin/mall/registered', null, { params: { ...params } })
   },
   uploadfile (data) {
     return request.post('/common/uploader', data, {
@@ -86,5 +47,17 @@ export default {
         'Content-Type': 'multipart/form-data'
       }
     })
+  },
+  getAddressList (params = {}) {
+    return request.get('/admin/mall/getAddressList', { params: { ...params } })
+  },
+  getAllCity () {
+    return request.get('/public/json/area.json')
+  },
+  addAddress (params = {}) {
+    return request.post('/admin/mall/addAddress', params)
+  },
+  getAddressInfo (params = {}) {
+    return request.get('/admin/mall/getAddressInfo', { params: { ...params } })
   }
 }

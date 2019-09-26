@@ -34,7 +34,7 @@
           slot="default"
           v-model="defaultAddress"
           size="22px"
-          active-color="#07c160"
+          active-color="#eb3c3c"
         />
       </van-cell>
     </van-cell-group>
@@ -45,6 +45,7 @@
     >
       <van-area
         :area-list="addressList"
+        @cancel="showCity = false"
         @confirm="addressConfirm"
        />
     </van-popup>
@@ -116,9 +117,9 @@ export default {
   },
   methods: {
     // 获取城市信息
-    async getAllAddress () {
+    async getAllCity () {
       try {
-        let ret = await this.$koa2Api.getAllAddress()
+        let ret = await this.$mallApi.getAllCity()
         if (+ret.status === 200) {
           this.addressList = ret.data
         } else {
@@ -131,11 +132,11 @@ export default {
     // 获取地址信息
     async getAddressInfo () {
       try {
-        let ret = await this.$koa2Api.getAddressInfo({
-          addressId: this.addressId
+        let ret = await this.$mallApi.getAddressInfo({
+          address_id: this.addressId
         })
         if (+ret.data._errCode === 0) {
-          const res = ret.data._data.addressInfo
+          const res = ret.data._data.address_Info
           this.addressInfo = {
             ...res
           }
@@ -167,10 +168,10 @@ export default {
         phone: this.phone,
         area: this.address,
         detail: this.detail,
-        defaultAddress: this.defaultAddress
+        defaultAddress: this.defaultAddress ? 1 : 0
       }
       try {
-        let ret = await this.$koa2Api.addAddress(params)
+        let ret = await this.$mallApi.addAddress(params)
         if (+ret.data._errCode === 0) {
           Toast.success('添加成功')
           this.$router.go(-1)
@@ -183,13 +184,13 @@ export default {
     }
   },
   mounted () {
-    const { type, addressId } = this.$route.query
+    const { addressId } = this.$route.query
     if (addressId) {
       // 获取地址信息
       this.addressId = addressId
       this.getAddressInfo()
     }
-    this.getAllAddress()
+    this.getAllCity()
   }
 }
 </script>
@@ -209,7 +210,7 @@ export default {
   height: 44px;
   font-size: 16px;
   color: #ffffff;
-  background-color: #FFDA05;
+  background-image: linear-gradient(to right, #eb3c3c, #ff7459);
   border-color: transparent;
   border-radius: 5px;
   &.van-button--disabled {

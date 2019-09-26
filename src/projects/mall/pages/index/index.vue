@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     async getShopList () {
-      this.$mallApi.checkLoginState()
+      // this.$mallApi.checkLoginState()
       let ret = await this.$mallApi.getShopList()
       if (+ret.data._errCode === 0) {
         this.shopList = ret.data._data.shop_list

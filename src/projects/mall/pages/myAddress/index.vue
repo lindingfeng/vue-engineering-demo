@@ -14,7 +14,7 @@
         </div>
         <div class="right-edit-btn"  bindtap="addAddress">
           <img src="./imgs/ic_address_edit@2x.png" alt="">
-          <p @click="$router.push(`addAddress?type=1&addressId=${item.id}`)">修改</p>
+          <p @click="$router.push(`addAddress?addressId=${item.id}`)">编辑</p>
         </div>
         <!-- 默认地址边框 -->
         <img v-if="item.is_default == 1" class="image-border" src="./imgs/img_address_sel@2x.png" alt="">
@@ -46,14 +46,14 @@ export default {
     }
   },
   methods: {
-    async getAddress () {
+    async getAddressList () {
       try {
-        let ret = await this.$koa2Api.getAddress()
+        let ret = await this.$mallApi.getAddressList()
         if (+ret.data._errCode === 0) {
-          ret.data._data.addressList.forEach(ele => {
+          ret.data._data.address_list.forEach(ele => {
             ele.area = ele.area.join('')
           })
-          this.addressList = ret.data._data.addressList || []
+          this.addressList = ret.data._data.address_list || []
         } else {
           Toast.fail(ret.data._errStr)
         }
@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted () {
-    this.getAddress()
+    this.getAddressList()
   }
 }
 </script>
@@ -143,17 +143,17 @@ export default {
 }
 .add-address-btn {
   position: fixed;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .add-address-btn button {
   width: 100%;
   font-size: 16px;
   line-height: 44px;
   color: #ffffff;
-  background: #FFE100;
-  border-color: #FFE100;
-  border-radius: 4px;
+  background-image: linear-gradient(to right, #eb3c3c, #ff7459);
+  border-color: transparent;
+  /* border-radius: 4px; */
 }
 </style>

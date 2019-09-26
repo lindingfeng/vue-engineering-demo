@@ -61,6 +61,11 @@ export default {
   border-top: 1px solid #e7e7e7;
   background-color: #fff;
 }
+@supports (bottom: env(safe-area-inset-bottom)) {
+  .tabBar-content {
+    padding-bottom: calc(5px + env(safe-area-inset-bottom));
+  }
+}
 .tabBar-item {
   flex: 1;
   text-align: center;
