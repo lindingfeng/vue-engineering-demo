@@ -23,18 +23,7 @@
     </div>
     <!-- 商品列表 -->
     <div class="shop-content">
-      <ul class="clearFix">
-        <li v-for="(item, index) in shopList" :key="index" class="shop-item">
-          <div class="shop-item-content">
-            <img :src="item.shop_banner[0]" alt="">
-            <p>{{item.shop_name}}</p>
-            <div class="price-sales">
-              <span class="price-txt"><span>¥</span>{{item.shop_price}}</span>
-              <span class="sales-txt">{{item.shop_sales}}人付款</span>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <shop-item :list="shopList" @shopTap="shopTap" />
     </div>
     <van-uploader multiple :after-read="afterRead" />
     <tab-bar :activeTab="activeTab" @tabBarChange="tabBarChange" />
@@ -54,6 +43,7 @@ import {
   Uploader
 } from 'vant'
 import tabBar from '@@/components/tabBar'
+import shopItem from '@@/components/shopItem'
 
 export default {
   components: {
@@ -66,7 +56,8 @@ export default {
     [CellGroup.name]: CellGroup,
     [Cell.name]: Cell,
     [Uploader.name]: Uploader,
-    tabBar
+    tabBar,
+    shopItem
   },
   data () {
     return {
@@ -95,6 +86,9 @@ export default {
       if (+ret.data._errCode === 0) {
         this.shopList = ret.data._data.shop_list
       }
+    },
+    shopTap (e) {
+      console.log(e)
     },
     async uploadfile (formdata) {
       try {
