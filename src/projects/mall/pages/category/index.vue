@@ -7,8 +7,8 @@
           :class="activeCategory === index ? 'active' : ''"
           v-for="(item, index) in categoryList"
           :key="index"
-          @click="chooseCategory(index, $event)"
-        >{{item.category_name}}</p>
+          @click="chooseCategory(index)"
+        >{{item.category_name}}{{index}}</p>
       </div>
     </div>
     <div class="scroll-right" ref="scrollRight">
@@ -136,9 +136,6 @@ export default {
       }
     },
     chooseCategory (index, ev) {
-      // console.log(this.$refs.scrollLeft.offsetHeight)
-      // console.log(ev)
-      this.bsLeft.scrollBy(0, 40)
       if (this.activeCategory !== index) {
         this.activeCategory = index
       }

@@ -1,20 +1,13 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import sha1 from 'sha1'
-import store from '../router'
+import router from '../router'
 import { commonParams } from '../config'
 
 // 创建axios实例
 const service = axios.create({
   // baseURL: 'http://132.232.35.229:7001',
   baseURL: 'http://127.0.0.1:7001',
-  // transformRequest: [function (data) {
-  //   let ret = ''
-  //   for (let it in data) {
-  //     ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-  //   }
-  //   return ret
-  // }],
   timeout: 10000
 })
 
@@ -53,7 +46,7 @@ service.interceptors.response.use(
   response => {
     // 登录态失效
     if (+response.data._errCode === 1001) {
-      store.push(`/login`)
+      router.push(`/login`)
     }
     return response
   },

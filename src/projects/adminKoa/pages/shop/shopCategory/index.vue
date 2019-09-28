@@ -184,7 +184,7 @@ export default {
           pageIndex: this.currentPage
         })
         if (+ret.data._errCode === 0) {
-          this.categoryList = ret.data._data.categoryList
+          this.categoryList = ret.data._data.shop_category_list
           this.total = ret.data._data.total
         } else {
           this.$message.error({

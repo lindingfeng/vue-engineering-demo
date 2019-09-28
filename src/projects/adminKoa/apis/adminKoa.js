@@ -2,20 +2,12 @@ import request from '@@/utils/request'
 
 export default {
   // 登陆
-  login (data) {
-    return request({
-      url: '/api/admin/login',
-      method: 'post',
-      data: data
-    })
+  login (params = {}) {
+    return request.post('/admin/mall/login', null, { params: { ...params } })
   },
   // 获取商品列表
-  getShopList (data) {
-    return request({
-      url: '/api/getShopList',
-      method: 'post',
-      data: data
-    })
+  getShopList (params = {}) {
+    return request.get('/admin/mall/getShopList', { params: { ...params } })
   },
   // 添加/编辑商品
   operationShop (data) {
@@ -34,12 +26,8 @@ export default {
     })
   },
   // 获取商品分类列表
-  getCategory (data) {
-    return request({
-      url: '/api/getCategory',
-      method: 'post',
-      data: data
-    })
+  getCategory (params = {}) {
+    return request.get('/admin/mall/getCategoryList', { params: { ...params } })
   },
   // 添加/编辑商品分类
   operationCategory (data) {

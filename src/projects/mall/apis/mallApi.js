@@ -33,13 +33,13 @@ export default {
     return request.get('/common/checkLoginState')
   },
   getShopList (params = {}) {
-    return request.get('/admin/mall/getShopList', { params: { ...params } })
+    return request.get('/client/mall/getShopList', { params: { ...params } })
   },
   login (params = {}) {
-    return request.post('/admin/mall/login', null, { params: { ...params } })
-  },
+    return request.post('/client/mall/login', null, { params: { ...params } })
+  }, 
   registered (params = {}) {
-    return request.post('/admin/mall/registered', null, { params: { ...params } })
+    return request.post('/client/mall/registered', null, { params: { ...params } })
   },
   uploadfile (data) {
     return request.post('/common/uploader', data, {
@@ -49,15 +49,15 @@ export default {
     })
   },
   getAddressList (params = {}) {
-    return request.get('/admin/mall/getAddressList', { params: { ...params } })
+    return request.get('/client/mall/getAddressList', { params: { ...params } })
   },
   getAllCity () {
     return request.get('/public/json/area.json')
   },
   addAddress (params = {}) {
-    return request.post('/admin/mall/addAddress', params)
+    return request.post('/client/mall/addAddress', params)
   },
   getAddressInfo (params = {}) {
-    return request.get('/admin/mall/getAddressInfo', { params: { ...params } })
+    return request.get('/client/mall/getAddressInfo', { params: { ...params } })
   }
 }
