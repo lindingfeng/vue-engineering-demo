@@ -172,7 +172,6 @@ export default {
 }
 .shop-item-content {
   width: 100%;
-  /* height: 100px; */
   background-color: #fff;
   img {
     width: 100%;
