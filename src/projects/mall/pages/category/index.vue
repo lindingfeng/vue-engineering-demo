@@ -130,7 +130,7 @@ export default {
       this[ele] = new BScroll(selector, options)
     },
     tabBarChange (ev) {
-      const index = (ev || {}).index || 0
+      const index = ev.index || 0
       if (index !== this.activeTab) {
         this.$router.push(this.tabBarList[index])
       }

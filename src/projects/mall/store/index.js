@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Cookies from 'js-cookie'
+import shop from './module/shop'
 import order from './module/order'
 import mallApi from '@@/apis/mallApi'
 
@@ -44,6 +45,7 @@ const store = new Vuex.Store({
   },
 
   modules: {
+    shop,
     order
   }
 

@@ -53,7 +53,7 @@ export default new Router({
       component: () => import('@@/pages/shopList')
     },
     {
-      path: '/shopDetail',
+      path: '/shopDetail/:id',
       name: 'shopDetail',
       component: () => import('@@/pages/shopDetail')
     },

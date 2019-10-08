@@ -2,6 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import sha1 from 'sha1'
 import router from '../router'
+import { Toast } from 'vant'
 import { commonParams } from '../config'
 
 // 创建axios实例
@@ -45,10 +46,21 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // 登录态失效
-    if (+response.data._errCode === 1001) {
-      router.push(`/login`)
+    if (+response.data._errCode === 0) {
+      return response
+    } else {
+      if (+response.data._errCode === 1001) {
+        router.push(`/login`)
+      } else {
+        const apiUrl = response.config.url
+        const filterApi = ['getShopLists']
+        const noAlert = filterApi.some(item => apiUrl.indexOf(item) !== -1)
+        if (!noAlert) {
+          Toast(response.data._errStr || '未知错误')
+        }
+        return response
+      }
     }
-    return response
   },
   error => {
     console.log(error.message)

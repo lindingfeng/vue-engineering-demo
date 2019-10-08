@@ -42,6 +42,7 @@ import {
   CellGroup,
   Uploader
 } from 'vant'
+import { mapState } from 'vuex'
 import tabBar from '@@/components/tabBar'
 import shopItem from '@@/components/shopItem'
 
@@ -66,12 +67,14 @@ export default {
         'https://aecpm.alicdn.com/simba/img/TB14ab1KpXXXXclXFXXSutbFXXX.jpg_q50.jpg',
         'https://aecpm.alicdn.com/simba/img/TB1CWf9KpXXXXbuXpXXSutbFXXX.jpg_q50.jpg'
       ],
-      shopList: [],
       activeTab: 0,
       tabBarList: [ 'index', 'category', 'cart', 'account' ]
     }
   },
   computed: {
+    ...mapState({
+      shopList: state => state.shop.shopList
+    }),
     isValidloginState () {
       return this.$store.state.isValidloginState
     },
@@ -88,7 +91,8 @@ export default {
       }
     },
     shopTap (e) {
-      console.log(e)
+      const { shop_id } = e || {}
+      this.$router.push({ path: `shopDetail/${shop_id}` })
     },
     async uploadfile (formdata) {
       try {
@@ -114,14 +118,14 @@ export default {
       this.uploadfile(formdata)
     },
     tabBarChange (ev) {
-      const index = (ev || {}).index || 0
+      const index = ev.index || 0
       if (index !== this.activeTab) {
         this.$router.push(this.tabBarList[index])
       }
     }
   },
   mounted () {
-    this.getShopList()
+    this.$store.dispatch('shop/getShopList', {})
   }
 }
 </script>
