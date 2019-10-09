@@ -15,7 +15,7 @@
         </div>
         <div class="cart-item-info" v-for="(child, idx) in item.shop_list" :key="idx">
           <div class="check-box-content">
-            <van-checkbox v-model="child.select" icon-size="20" checked-color="#eb3c3c" @change="shopSelectChange(item, $event)" />
+            <van-checkbox v-model="child.select" icon-size="20" checked-color="#eb3c3c" @change="shopSelectChange(item, child, $event)" />
           </div>
           <div class="image-content">
             <img :src="child.shop_image" alt="">
@@ -27,8 +27,7 @@
               <van-stepper
                 :value="child.number"
                 integer
-                async-change
-                @change="valueChange"
+                @change="valueChange(child, $event)"
               />
             </div>
           </div>
@@ -43,7 +42,7 @@
       <div class="right-account-detel">
         <div class="account-content">
           <span class="span1">总计: </span>
-          <span class="span3"><span class="span2">¥</span>1500</span>
+          <span class="span3"><span class="span2">¥</span>{{account / 100}}</span>
         </div>
         <!-- <div class="account-btn"></div> -->
         <van-button type="danger">结算(3)</van-button>
@@ -108,12 +107,13 @@ export default {
         }
       ],
       isEdit: false,
-      allSelect: false
+      allSelect: false,
+      account: 0
     }
   },
   methods: {
     tabBarChange (ev) {
-      const index = (ev || {}).index || 0
+      const index = ev.index || 0
       if (index !== this.activeTab) {
         this.$router.push(this.tabBarList[index])
       }
@@ -125,7 +125,7 @@ export default {
       })
     },
     // 店铺选中按钮change事件
-    shopSelectChange (item, value) {
+    shopSelectChange (item, child, value) {
       if (value) {
         let storeAllSelect = true
         item.shop_list.forEach(ele => {
@@ -145,7 +145,7 @@ export default {
             this.allSelect = true
           }
         }
-        return
+        this.account += Number(child.shop_price) * Number(child.number)
       } else {
         if (item.select) {
           item.select = false
@@ -153,6 +153,7 @@ export default {
         if (this.allSelect) {
           this.allSelect = false
         }
+        this.account -= Number(child.shop_price) * Number(child.number)
       }
     },
     // 全选按钮click事件
@@ -167,8 +168,19 @@ export default {
     editChange () {
       this.isEdit = !this.isEdit
     },
-    async valueChange (value) {
-      this.valueNumber = value
+    async valueChange (child, value) {
+      child.number = value
+      if (child.select) {
+        let accounts = 0
+        this.cartList.forEach(element => {
+          element.shop_list.forEach(ele => {
+            if (ele.select) {
+              accounts += Number(ele.shop_price) * Number(ele.number)
+            }
+          })
+        })
+        this.account = accounts
+      }
     }
   },
   mounted () {
