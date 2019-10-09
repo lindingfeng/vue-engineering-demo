@@ -46,24 +46,25 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // 登录态失效
-    if (+response.data._errCode === 0) {
-      return response
+    if (+response.data._errCode === 1001) {
+      router.push(`/login`)
     } else {
-      if (+response.data._errCode === 1001) {
-        router.push(`/login`)
-      } else {
+      if (+response.data._errCode !== 0) {
         const apiUrl = response.config.url
-        const filterApi = ['getShopLists']
+        const filterApi = []
         const noAlert = filterApi.some(item => apiUrl.indexOf(item) !== -1)
         if (!noAlert) {
           Toast(response.data._errStr || '未知错误')
         }
-        return response
       }
     }
+    return response
   },
   error => {
-    console.log(error.message)
+    if ((error || {}).message.indexOf('timeout') !== -1) {
+      Toast('请求超时!')
+    }
+    return Promise.reject(error)
   }
 )
 

@@ -7,8 +7,8 @@
           :class="activeCategory === index ? 'active' : ''"
           v-for="(item, index) in categoryList"
           :key="index"
-          @click="chooseCategory(index)"
-        >{{item.category_name}}{{index}}</p>
+          @click="chooseCategory(item.category_id)"
+        >{{item.category_name}}</p>
       </div>
     </div>
     <div class="scroll-right" ref="scrollRight">
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import tabBar from '@@/components/tabBar'
 import shopItem from '@@/components/shopItem'
 import BScroll from '@better-scroll/core'
@@ -47,6 +48,11 @@ export default {
     tabBar,
     shopItem
   },
+  computed: {
+    ...mapState({
+      categoryList: state => state.shop.categoryList
+    })
+  },
   data () {
     return {
       bsLeft: null,
@@ -54,51 +60,51 @@ export default {
       activeTab: 1,
       activeCategory: 0,
       tabBarList: [ 'index', 'category', 'cart', 'account' ],
-      categoryList: [
-        { category_name: '手机' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-        { category_name: '电脑' },
-      ],
+      // categoryList: [
+      //   { category_name: '手机' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      //   { category_name: '电脑' },
+      // ],
       images: [
         'https://aecpm.alicdn.com/simba/img/TB14ab1KpXXXXclXFXXSutbFXXX.jpg_q50.jpg',
         'https://aecpm.alicdn.com/simba/img/TB1CWf9KpXXXXbuXpXXSutbFXXX.jpg_q50.jpg'
@@ -135,9 +141,15 @@ export default {
         this.$router.push(this.tabBarList[index])
       }
     },
-    chooseCategory (index, ev) {
+    chooseCategory (category_id, ev) {
       if (this.activeCategory !== index) {
         this.activeCategory = index
+        this.$store.dispatch('shop/getShopList', {
+          category_id,
+          success () {
+            _this.pageIndex += 1
+          }
+        })
       }
     },
     shopTap (e) {
@@ -146,6 +158,7 @@ export default {
   },
   mounted () {
     this.getShopList()
+    this.$store.dispatch('shop/getCategoryList', {})
     this.$nextTick(() => {
       this.initBS({
         ele: 'bsLeft',

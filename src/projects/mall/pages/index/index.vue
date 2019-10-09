@@ -68,7 +68,8 @@ export default {
         'https://aecpm.alicdn.com/simba/img/TB1CWf9KpXXXXbuXpXXSutbFXXX.jpg_q50.jpg'
       ],
       activeTab: 0,
-      tabBarList: [ 'index', 'category', 'cart', 'account' ]
+      tabBarList: [ 'index', 'category', 'cart', 'account' ],
+      pageIndex: 1
     }
   },
   computed: {
@@ -125,7 +126,12 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('shop/getShopList', {})
+    const _this = this
+    this.$store.dispatch('shop/getShopList', {
+      success () {
+        _this.pageIndex += 1
+      }
+    })
   }
 }
 </script>
