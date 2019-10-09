@@ -1,15 +1,19 @@
 <template>
   <div class="shop-list-page">
-    商品详情
+    <!-- banner -->
+    <van-swipe :autoplay="3000" indicator-color="white">
+      <van-swipe-item v-for="(image, index) in images" :key="index">
+        <img style="width: 100%;" :src="image" />
+      </van-swipe-item>
+    </van-swipe>
   </div>
 </template>
 
 <script>
 import {
   // Button,
-  // Uploader,
-  // CellGroup,
-  // Field,
+  Swipe,
+  SwipeItem,
   // ActionSheet,
   // Toast
 } from 'vant';
@@ -17,15 +21,17 @@ import {
 export default {
   components: {
     // [Button.name]: Button,
-    // [Uploader.name]: Uploader,
-    // [CellGroup.name]: CellGroup,
-    // [Field.name]: Field,
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
     // [ActionSheet.name]: ActionSheet,
     // [Toast.name]: Toast,
   },
   data () {
     return {
-      shopList: []
+      images: [
+        'https://aecpm.alicdn.com/simba/img/TB14ab1KpXXXXclXFXXSutbFXXX.jpg_q50.jpg',
+        'https://aecpm.alicdn.com/simba/img/TB1CWf9KpXXXXbuXpXXSutbFXXX.jpg_q50.jpg'
+      ],
     }
   },
   methods: {

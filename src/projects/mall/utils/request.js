@@ -2,6 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import sha1 from 'sha1'
 import router from '../router'
+import { Toast } from 'vant'
 import { commonParams } from '../config'
 
 // 创建axios实例
@@ -47,11 +48,23 @@ service.interceptors.response.use(
     // 登录态失效
     if (+response.data._errCode === 1001) {
       router.push(`/login`)
+    } else {
+      if (+response.data._errCode !== 0) {
+        const apiUrl = response.config.url
+        const filterApi = []
+        const noAlert = filterApi.some(item => apiUrl.indexOf(item) !== -1)
+        if (!noAlert) {
+          Toast(response.data._errStr || '未知错误')
+        }
+      }
     }
     return response
   },
   error => {
-    console.log(error.message)
+    if ((error || {}).message.indexOf('timeout') !== -1) {
+      Toast('请求超时!')
+    }
+    return Promise.reject(error)
   }
 )
 

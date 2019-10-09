@@ -4,7 +4,9 @@
       <li v-for="(item, index) in list" :key="index" class="shop-item" @click="shopEvent(item)">
         <div class="shop-item-content">
           <img :src="item.shop_banner[0]" alt="">
-          <p>{{item.shop_name}}</p>
+          <div class="shop-title-content">
+            <p>{{item.shop_name}}</p>
+          </div>
           <div class="price-sales">
             <span class="price-txt"><span>¥</span>{{item.shop_price}}</span>
             <span class="sales-txt">{{item.shop_sales}}人付款</span>
@@ -48,22 +50,23 @@ export default {
 }
 .shop-item-content {
   width: 100%;
-  /* height: 100px; */
   background-color: #fff;
   img {
     width: 100%;
   }
-  p {
+  .shop-title-content {
     margin: 5px;
     height: 32px;
-    line-height: 16px;
-    font-size: 13px;
-    color: #232326;
-    overflow : hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;  
-    -webkit-box-orient: vertical;
+    p {
+      line-height: 16px;
+      font-size: 13px;
+      color: #232326;
+      overflow : hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
   }
 }
 .price-sales {

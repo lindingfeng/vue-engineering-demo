@@ -8,36 +8,25 @@ export default {
       data: data
     })
   },
-  addCategory (data) {
-    return request({
-      url: '/api/addCategory',
-      method: 'post',
-      data: data
-    })
-  },
-  getCategory () {
-    return request({
-      url: '/api/getCategory',
-      method: 'post',
-      data: {}
-    })
-  },
-  addShop (data) {
-    return request({
-      url: '/api/addShop',
-      method: 'post',
-      data: data
-    })
-  },
+  // getCategory () {
+  //   return request({
+  //     url: '/api/getCategory',
+  //     method: 'post',
+  //     data: {}
+  //   })
+  // },
   checkLoginState () {
     return request.get('/common/checkLoginState')
   },
   getShopList (params = {}) {
     return request.get('/client/mall/getShopList', { params: { ...params } })
   },
+  getCategoryList (params = {}) {
+    return request.get('/client/mall/getCategoryList', { params: { ...params } })
+  },
   login (params = {}) {
     return request.post('/client/mall/login', null, { params: { ...params } })
-  }, 
+  },
   registered (params = {}) {
     return request.post('/client/mall/registered', null, { params: { ...params } })
   },
