@@ -7,7 +7,7 @@
           :class="activeCategory === index ? 'active' : ''"
           v-for="(item, index) in categoryList"
           :key="index"
-          @click="chooseCategory(item.category_id)"
+          @click="chooseCategory(index)"
         >{{item.category_name}}</p>
       </div>
     </div>
@@ -50,7 +50,8 @@ export default {
   },
   computed: {
     ...mapState({
-      categoryList: state => state.shop.categoryList
+      shopList: state => state.shop.shopList,
+      categoryList: state => state.shop.categoryList,
     })
   },
   data () {
@@ -60,76 +61,52 @@ export default {
       activeTab: 1,
       activeCategory: 0,
       tabBarList: [ 'index', 'category', 'cart', 'account' ],
-      // categoryList: [
-      //   { category_name: '手机' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      //   { category_name: '电脑' },
-      // ],
       images: [
         'https://aecpm.alicdn.com/simba/img/TB14ab1KpXXXXclXFXXSutbFXXX.jpg_q50.jpg',
         'https://aecpm.alicdn.com/simba/img/TB1CWf9KpXXXXbuXpXXSutbFXXX.jpg_q50.jpg'
       ],
-      shopList: []
+      // shopList: []
     }
   },
   methods: {
-    async getShopList () {
-      let ret = await this.$mallApi.getShopList()
-      if (+ret.data._errCode === 0) {
-        this.shopList = ret.data._data.shop_list
-        if (!this.bsRight) {
-          this.$nextTick(() => {
-            this.initBS({
-              ele: 'bsRight',
-              selector: '.scroll-right',
-              options: {
-                scrollY: true,
-                click: true
-              }
+    initData () {
+      const _this = this
+      this.$store.dispatch('shop/getShopList', {
+        success () {
+          if (!_this.bsRight) {
+            _this.$nextTick(() => {
+              _this.initBS({
+                ele: 'bsRight',
+                selector: '.scroll-right',
+                options: {
+                  scrollY: true,
+                  click: true
+                }
+              })
             })
-          })
+          }
         }
-      }
+      })
+      this.$store.dispatch('shop/getCategoryList', {
+        success () {
+          if (!_this.bsLeft) {
+            _this.$nextTick(() => {
+              _this.initBS({
+                ele: 'bsLeft',
+                selector: '.scroll-left',
+                options: {
+                  scrollY: true,
+                  click: true,
+                  bounce: {
+                    top: false,
+                    bottom: false,
+                  }
+                }
+              })
+            })
+          }
+        }
+      })
     },
     initBS (option) {
       const { ele, selector, options } = option
@@ -141,11 +118,12 @@ export default {
         this.$router.push(this.tabBarList[index])
       }
     },
-    chooseCategory (category_id, ev) {
+    chooseCategory (index, ev) {
+      const _this = this
       if (this.activeCategory !== index) {
         this.activeCategory = index
         this.$store.dispatch('shop/getShopList', {
-          category_id,
+          categoryId: this.categoryList[index].category_id,
           success () {
             _this.pageIndex += 1
           }
@@ -157,22 +135,7 @@ export default {
     }
   },
   mounted () {
-    this.getShopList()
-    this.$store.dispatch('shop/getCategoryList', {})
-    this.$nextTick(() => {
-      this.initBS({
-        ele: 'bsLeft',
-        selector: '.scroll-left',
-        options: {
-          scrollY: true,
-          click: true,
-          bounce: {
-            top: false,
-            bottom: false,
-          }
-        }
-      })
-    })
+    this.initData()
   }
 }
 </script>

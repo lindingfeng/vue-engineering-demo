@@ -19,9 +19,17 @@ export default {
     /*
      * @desc: 商品列表
     */
-    async getShopList ({ commit }, { pageIndex = 1, pageSize = 15, success, fail }) {
+    async getShopList ({ commit }, data) {
+      const { categoryId, pageIndex = 1, pageSize = 15, success, fail } = data
       try {
-        let ret = await mallApi.getShopList({ pageIndex, pageSize })
+        let params = {
+          pageIndex,
+          pageSize
+        }
+        if (categoryId) {
+          params.categoryId = categoryId
+        }
+        let ret = await mallApi.getShopList(params)
         if (+ret.data._errCode === 0) {
           commit('setShopList', ret.data._data.shop_list || [])
           success && success(ret.data)
