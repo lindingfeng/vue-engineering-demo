@@ -26,9 +26,7 @@ const store = new Vuex.Store({
   actions: {
     async checkLoginState ({ commit }) {
       const token = Cookies.get('token')
-      if (!token) {
-        return
-      }
+      if (!token) return
       try {
         let ret = await mallApi.checkLoginState()
         if (+ret.data._errCode === 0) {

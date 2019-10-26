@@ -50,8 +50,9 @@ service.interceptors.response.use(
       router.push(`/login`)
     } else {
       if (+response.data._errCode !== 0) {
+        console.log(response)
         const apiUrl = response.config.url
-        const filterApi = []
+        const filterApi = ['area.json']
         const noAlert = filterApi.some(item => apiUrl.indexOf(item) !== -1)
         if (!noAlert) {
           Toast(response.data._errStr || '未知错误')

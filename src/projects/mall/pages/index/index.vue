@@ -74,26 +74,15 @@ export default {
   },
   computed: {
     ...mapState({
+      isValidloginState: state => state.isValidloginState,
+      avatar: state => state.avatar,
       shopList: state => state.shop.shopList
-    }),
-    isValidloginState () {
-      return this.$store.state.isValidloginState
-    },
-    avatar () {
-      return this.$store.state.avatar
-    }
+    })
   },
   methods: {
-    async getShopList () {
-      // this.$mallApi.checkLoginState()
-      let ret = await this.$mallApi.getShopList()
-      if (+ret.data._errCode === 0) {
-        this.shopList = ret.data._data.shop_list
-      }
-    },
     shopTap (e) {
       const { shop_id } = e || {}
-      this.$router.push({ path: `shopDetail/${shop_id}` })
+      this.$router.push({ path: `/shopDetail/${shop_id}` })
     },
     async uploadfile (formdata) {
       try {
@@ -167,7 +156,7 @@ export default {
   }
 }
 .shop-content {
-  padding: 0 6px;
+  padding: 6px;
 }
 .shop-item {
   float: left;
