@@ -7,9 +7,10 @@ import { commonParams } from '../config'
 
 // 创建axios实例
 const service = axios.create({
-  // baseURL: 'http://132.232.35.229:7001',
-  baseURL: 'http://127.0.0.1:7001',
-  timeout: 10000
+  baseURL: 'https://api.lindf.com',
+  // baseURL: 'http://132.232.35.229',
+  // baseURL: 'http://127.0.0.1:7001',
+  timeout: 60000
 })
 
 // request拦截器

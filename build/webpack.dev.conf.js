@@ -1,4 +1,5 @@
 'use strict'
+const fs = require('fs');
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
@@ -9,6 +10,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const minimist = require('minimist')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -16,6 +18,24 @@ const PORT = process.env.PORT && Number(process.env.PORT)
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['webpack/hot/dev-server', `webpack-dev-server/client?http://localhost:${config.dev.port}/`].concat(baseWebpackConfig.entry[name])
 });
+
+const getParamFromCLI = function(cliName) {
+  const args = minimist(process.argv.slice(2));
+  if (cliName) {
+    return args[cliName];
+  } else {
+    return args;
+  }
+}
+
+const projectName = getParamFromCLI('projectname') || getParamFromCLI()._[0];
+
+let favicin_path = path.resolve(__dirname, `../src/projects/${projectName}/template/favicon.ico`);
+
+// 检测项目是否存在favicon.ico文件
+if(!fs.existsSync(favicin_path)){
+  favicin_path = path.resolve(__dirname, 'favicon.ico');
+}
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -64,6 +84,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: config.dev.template,
+      favicon: favicin_path,
       inject: true
     }),
     // copy custom static assets

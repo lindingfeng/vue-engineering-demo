@@ -115,6 +115,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$route.query, navigator.userAgent)
     const _this = this
     this.$store.dispatch('shop/getShopList', {
       success () {

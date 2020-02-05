@@ -192,7 +192,7 @@
               <li class="uploader" v-if="showUploaderBtn">
                 <el-upload
                   class="avatar-uploader"
-                  action="https://api.lindf.com/api/qiniu"
+                  action="https://api.lindf.com/common/uploader"
                   multiple
                   accept="image/jpeg,image/png,image/jpg"
                   :show-file-list="false"

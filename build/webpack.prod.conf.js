@@ -1,4 +1,5 @@
 'use strict'
+const fs = require('fs');
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -10,8 +11,27 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const minimist = require('minimist')
 
 const env = require('../config/prod.env')
+
+const getParamFromCLI = function(cliName) {
+  const args = minimist(process.argv.slice(2));
+  if (cliName) {
+    return args[cliName];
+  } else {
+    return args;
+  }
+}
+
+const projectName = getParamFromCLI('projectname') || getParamFromCLI()._[0];
+
+let favicin_path = path.resolve(__dirname, `../src/projects/${projectName}/template/favicon.ico`);
+
+// 检测项目是否存在favicon.ico文件
+if(!fs.existsSync(favicin_path)){
+  favicin_path = path.resolve(__dirname, 'favicon.ico')
+}
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -63,6 +83,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: config.build.index,
       template: config.build.template,
+      favicon: favicin_path,
       inject: true,
       minify: {
         removeComments: true,

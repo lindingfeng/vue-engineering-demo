@@ -6,7 +6,8 @@ import { commonParams } from '../config'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: 'http://127.0.0.1:7001',
+  baseURL: 'https://api.lindf.com',
+  // baseURL: 'http://127.0.0.1:7001',
   timeout: 10000
 })
 
