@@ -8,13 +8,6 @@ export default {
       data: data
     })
   },
-  // getCategory () {
-  //   return request({
-  //     url: '/api/getCategory',
-  //     method: 'post',
-  //     data: {}
-  //   })
-  // },
   checkLoginState () {
     return request.get('/common/checkLoginState')
   },
@@ -48,5 +41,8 @@ export default {
   },
   getAddressInfo (params = {}) {
     return request.get('/client/mall/getAddressInfo', { params: { ...params } })
+  },
+  getWxSignInfo (params = {}) {
+    return request.post('/common/getWxSign', params)
   }
 }

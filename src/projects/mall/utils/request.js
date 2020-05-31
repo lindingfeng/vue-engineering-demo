@@ -10,7 +10,7 @@ const service = axios.create({
   baseURL: 'https://api.lindf.com',
   // baseURL: 'http://132.232.35.229',
   // baseURL: 'http://127.0.0.1:7001',
-  timeout: 60000
+  timeout: 30000
 })
 
 // request拦截器

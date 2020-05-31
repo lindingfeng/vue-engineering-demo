@@ -7,10 +7,21 @@
 </template>
 
 <script>
+import { isWeChatEnv } from '@/utils/env'
+
+const wxConfig = {
+  title: '林定锋真帅~', // 分享标题
+  desc: '一顿操作猛如虎，一问工资1500~', // 分享描述
+  link: 'https://mobile.lindf.com', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+  imgUrl: 'https://s1.huishoubao.com/static/m/2017/img/two-logo.jpg', // 分享图标
+}
+
 export default {
   name: 'App',
   mounted () {
-    // this.$store.dispatch('checkLoginState')
+    if (isWeChatEnv) {
+      this.$store.dispatch('getWxJsSignInfo', { wxConfig })
+    }
   }
 }
 </script>
