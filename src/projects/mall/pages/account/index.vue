@@ -27,7 +27,7 @@
           >
             <div class="icon-content">
               <i :class="item.icon"></i>
-              <div class="number">21</div>
+              <div class="number">23</div>
             </div>
             <p>{{item.title}}</p>
           </div>
